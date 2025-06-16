@@ -1,12 +1,12 @@
 const puppeteer = require('puppeteer');
 
 (async () => {
-  const browserFetcher = puppeteer.createBrowserFetcher();
-  const localRevisions = await browserFetcher.localRevisions();
-  if (localRevisions.length === 0) {
-    console.log('Downloading Chromium...');
-    await browserFetcher.download('118.0.5993.0'); // known compatible version
-  } else {
-    console.log('Chromium already installed.');
+  try {
+    console.log('Installing Chromium...');
+    await puppeteer.launch({ headless: 'new' });
+    console.log('Chromium launch successful.');
+  } catch (err) {
+    console.error('Failed to launch Chromium:', err);
+    process.exit(1);
   }
 })();
