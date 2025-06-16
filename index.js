@@ -55,7 +55,6 @@ async function scrapeAndSaveFights() {
       });
     });
 
-    // ✅ Write to backend's own folder again
     fs.writeFileSync("fights.json", JSON.stringify({ eventName, fights }, null, 2));
     console.log("✅ Fights updated at", new Date().toLocaleString());
 
@@ -66,7 +65,6 @@ async function scrapeAndSaveFights() {
   }
 }
 
-// Serve JSON to frontend
 app.get("/fights", (req, res) => {
   try {
     const data = JSON.parse(fs.readFileSync("fights.json", "utf-8"));
@@ -77,10 +75,8 @@ app.get("/fights", (req, res) => {
   }
 });
 
-// Run scraper once at server startup
 scrapeAndSaveFights();
 
-// Schedule weekly update: every Sunday at 7:00 AM
 cron.schedule("0 7 * * 0", () => {
   console.log("🕖 Running scheduled weekly UFC scrape...");
   scrapeAndSaveFights();
@@ -106,7 +102,6 @@ app.get("/articles-list", (req, res) => {
   });
 });
 
-// ✅ Only start server after all routes are registered
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
