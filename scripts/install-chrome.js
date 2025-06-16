@@ -3,7 +3,10 @@ const puppeteer = require('puppeteer');
 (async () => {
   try {
     console.log('Installing Chromium...');
-    await puppeteer.launch({ headless: 'new' });
+    await puppeteer.launch({
+      headless: 'new',
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
     console.log('Chromium launch successful.');
   } catch (err) {
     console.error('Failed to launch Chromium:', err);
